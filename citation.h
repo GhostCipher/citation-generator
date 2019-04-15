@@ -15,6 +15,9 @@ private:
     std::string pubCity;
     std::string PubState;
     std::string publisher;
+    std::string journalTitle;
+    std::string journalVolume;
+    std::string doiUrl;
   };
 
   ListNode *head;
@@ -23,7 +26,7 @@ public:
   Citation();
   ~Citation();
   void insertNode(int type,std::string date, std::string pg, std::string auth,
-          std::string title, std::string pubCity, std::string PubState, std::string publisher);
+          std::string title, std::string pubCity, std::string PubState, std::string publisher,std::string journalTitle, std::string journalVolume, std::string doiUrl);
   void deleteNode(std::string);
   void display();
   void save();

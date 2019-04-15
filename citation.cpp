@@ -34,7 +34,7 @@ Citation::~Citation(){
 }
 
 void Citation::insertNode(int type,string date, string pg, string auth,
-        string title, string pubCity, string PubState, string publisher){
+        string title, string pubCity, string PubState, string publisher, string journalTitle, string journalVolume, string doiUrl){
   //create pointers
   ListNode *newNode;
   ListNode *nodePtr;
@@ -46,6 +46,12 @@ void Citation::insertNode(int type,string date, string pg, string auth,
   newNode->pages = pg;
   newNode->author = auth;
   newNode->title = title;
+  newNode->pubCity = pubCity;
+  newNode->PubState = PubState;
+  newNode->publisher = publisher;
+  newNode->journalTitle = journalTitle;
+  newNode->journalVolume = journalVolume;
+  newNode->doiUrl = doiUrl;
 
   newNode->next = nullptr;
   //numCitations++;
@@ -98,8 +104,42 @@ void Citation::display(){
   nodePtr = head;
   cout << "\t\t\t" << "Refrences" << endl;
   while(nodePtr){
-  cout << nodePtr->author << "(" << nodePtr->date
-       << ") pg " <<nodePtr->pages << endl << "\t" << nodePtr->title << endl << endl;
+    switch(nodePtr->type){
+      case 11: //APA Journal
+        cout << nodePtr->author << " (" << nodePtr->date << ") "
+             << nodePtr->journalTitle << ", " << nodePtr->journalVolume << ", " << nodePtr->pages << endl << endl;
+        break;
+      case 12: //APA Magazine
+        cout << nodePtr->author << " (" << nodePtr->date << "). " << nodePtr->title << ". " << nodePtr->journalTitle << ", " << nodePtr->journalVolume;
+//        if(nodePtr->doiUrl)
+//          cout << " Retrieved from " << nodePtr->doiUrl << endl << endl;
+//        else
+          cout << endl;
+        break;
+      case 13: //APA Book
+        cout << nodePtr->author << " (" << nodePtr->date << "). " << nodePtr->title << ". " << nodePtr->pubCity << ", " << nodePtr->PubState << ": " << nodePtr->publisher << endl;
+        break;
+      case 14: //APA Newspaper
+        cout << nodePtr->author << " (" << nodePtr->date << "). " << nodePtr->title << ". " << nodePtr->publisher << ", pp. " << nodePtr->pages << endl;
+        break;
+      case 21: //MLA journal
+        cout << nodePtr->author << ". \"" << nodePtr->title << ".\" " << nodePtr->journalTitle << ", "<< nodePtr->journalVolume << ", " << nodePtr->date << " pp. " << nodePtr->pages << endl;
+        break;
+      case 22: //MLA Magazine
+        cout << nodePtr->author << ". " << nodePtr->title << " " << nodePtr-> publisher << ", " << nodePtr->journalVolume << ", " << nodePtr->date << " pp. " << nodePtr->pages << endl;
+
+        break;
+      case 23: //MLA Book
+        cout << nodePtr->author << ". " << nodePtr->title << " " << nodePtr-> publisher << ", " << nodePtr->date << endl;
+
+        break;
+      case 24: //MLA Newspaper
+        cout << nodePtr->author << ". " << nodePtr->title << " " << nodePtr-> publisher << ", " << nodePtr->date;
+//        if(nodePtr->doiUrl)
+//          cout << " Retrieved from " << nodePtr->doiUrl << endl << endl;
+//        else
+        break;
+    }
   nodePtr = nodePtr->next;
   }
 }
